@@ -13,6 +13,10 @@
 		D22E8F692CF6C33700A5AED9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D22E8F682CF6C33700A5AED9 /* Preview Assets.xcassets */; };
 		D22E8F6B2CF6C33700A5AED9 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22E8F6A2CF6C33700A5AED9 /* Persistence.swift */; };
 		D22E8F6E2CF6C33700A5AED9 /* SasidurkaWeather.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D22E8F6C2CF6C33700A5AED9 /* SasidurkaWeather.xcdatamodeld */; };
+		D24A71132CF9425000C1A8C8 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24A71122CF9425000C1A8C8 /* LocationManager.swift */; };
+		D24A71152CF9426D00C1A8C8 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D24A71142CF9426D00C1A8C8 /* WeatherService.swift */; };
+		D2D3A31A2CF972BE003F2981 /* LocationData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D3A3182CF972BD003F2981 /* LocationData+CoreDataClass.swift */; };
+		D2D3A31B2CF972BE003F2981 /* LocationData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D3A3192CF972BD003F2981 /* LocationData+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +27,11 @@
 		D22E8F682CF6C33700A5AED9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D22E8F6A2CF6C33700A5AED9 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		D22E8F6D2CF6C33700A5AED9 /* SasidurkaWeather.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SasidurkaWeather.xcdatamodel; sourceTree = "<group>"; };
+		D24A71122CF9425000C1A8C8 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		D24A71142CF9426D00C1A8C8 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
+		D24A71182CF946FF00C1A8C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D2D3A3182CF972BD003F2981 /* LocationData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocationData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D2D3A3192CF972BD003F2981 /* LocationData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocationData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +48,8 @@
 		D22E8F552CF6C33600A5AED9 = {
 			isa = PBXGroup;
 			children = (
+				D2D3A3182CF972BD003F2981 /* LocationData+CoreDataClass.swift */,
+				D2D3A3192CF972BD003F2981 /* LocationData+CoreDataProperties.swift */,
 				D22E8F602CF6C33600A5AED9 /* SasidurkaWeather */,
 				D22E8F5F2CF6C33600A5AED9 /* Products */,
 			);
@@ -55,9 +66,12 @@
 		D22E8F602CF6C33600A5AED9 /* SasidurkaWeather */ = {
 			isa = PBXGroup;
 			children = (
+				D24A71182CF946FF00C1A8C8 /* Info.plist */,
 				D22E8F612CF6C33600A5AED9 /* SasidurkaWeatherApp.swift */,
 				D22E8F632CF6C33600A5AED9 /* ContentView.swift */,
 				D22E8F652CF6C33700A5AED9 /* Assets.xcassets */,
+				D24A71122CF9425000C1A8C8 /* LocationManager.swift */,
+				D24A71142CF9426D00C1A8C8 /* WeatherService.swift */,
 				D22E8F6A2CF6C33700A5AED9 /* Persistence.swift */,
 				D22E8F6C2CF6C33700A5AED9 /* SasidurkaWeather.xcdatamodeld */,
 				D22E8F672CF6C33700A5AED9 /* Preview Content */,
@@ -143,9 +157,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2D3A31A2CF972BE003F2981 /* LocationData+CoreDataClass.swift in Sources */,
+				D2D3A31B2CF972BE003F2981 /* LocationData+CoreDataProperties.swift in Sources */,
 				D22E8F6E2CF6C33700A5AED9 /* SasidurkaWeather.xcdatamodeld in Sources */,
 				D22E8F6B2CF6C33700A5AED9 /* Persistence.swift in Sources */,
+				D24A71132CF9425000C1A8C8 /* LocationManager.swift in Sources */,
 				D22E8F642CF6C33600A5AED9 /* ContentView.swift in Sources */,
+				D24A71152CF9426D00C1A8C8 /* WeatherService.swift in Sources */,
 				D22E8F622CF6C33600A5AED9 /* SasidurkaWeatherApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -283,6 +301,7 @@
 				DEVELOPMENT_TEAM = 574AUK9VYX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_FILE[sdk=*]" = SasidurkaWeather/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -312,6 +331,7 @@
 				DEVELOPMENT_TEAM = 574AUK9VYX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_FILE[sdk=*]" = SasidurkaWeather/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

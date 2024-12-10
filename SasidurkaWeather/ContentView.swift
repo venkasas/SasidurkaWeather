@@ -1,4 +1,4 @@
-//
+//  Sasidurka Venkatesan - 991542294
 //  ContentView.swift
 //  SasidurkaWeather
 //
@@ -6,70 +6,79 @@
 //
 
 import SwiftUI
-import CoreData
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
-
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
+        entity: LocationData.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \LocationData.timestamp, ascending: false)]
+    ) private var items: FetchedResults<LocationData>
+
+    @StateObject private var locationManager = LocationManager()
+    @State private var weather: WeatherResponse?
 
     var body: some View {
-        NavigationView {
+        VStack {
+            if let weather = weather {
+                VStack {
+                    Text("City: \(weather.location.name), \(weather.location.country)")
+                    Text("Temperature: \(weather.current.temp_c)°C")
+                    Text("Feels Like: \(weather.current.feelslike_c)°C")
+                    Text("Condition: \(weather.current.condition.text)")
+                    Text("Wind: \(weather.current.wind_kph) km/h (\(weather.current.wind_dir))")
+                    Text("Humidity: \(weather.current.humidity)%")
+                    Text("UV Index: \(weather.current.uv)")
+                    Text("Visibility: \(weather.current.vis_km) km")
+                }
+
+                Button("Save Weather Data") {
+                    saveWeatherData(weather)
+                }
+            } else {
+                Text("Fetching Weather...")
+            }
+
             List {
                 ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
-                    }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                    VStack(alignment: .leading) {
+                        Text("\(item.city ?? "Unknown City"), \(item.country ?? "Unknown Country")")
+                        Text("Temperature: \(item.temperature)°C")
+                        Text("Condition: \(item.condition ?? "Unknown Condition")")
+                        if let timestamp = item.timestamp {
+                            Text("Updated: \(timestamp, formatter: itemFormatter)")
+                        }
                     }
                 }
             }
-            Text("Select an item")
         }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        .onAppear {
+            if let location = locationManager.location {
+                WeatherService().fetchWeather(latitude: location.latitude, longitude: location.longitude) { weather in
+                    self.weather = weather
+                }
             }
         }
     }
 
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
+    private func saveWeatherData(_ weather: WeatherResponse) {
+        let newItem = LocationData(context: viewContext)
+        newItem.id = UUID()
+        //newItem.city = weather.location.name
+       // newItem.country = weather.location.country
+        newItem.temperature = weather.current.temp_c
+        newItem.feelsLike = weather.current.feelslike_c
+        newItem.condition = weather.current.condition.text
+        newItem.windSpeed = weather.current.wind_kph
+        newItem.windDirection = weather.current.wind_dir
+        newItem.humidity = Int16(weather.current.humidity)
+        newItem.uvIndex = weather.current.uv
+        newItem.visibility = weather.current.vis_km
+        newItem.timestamp = Date()
 
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+        do {
+            try viewContext.save()
+        } catch {
+            print("Failed to save weather data: \(error)")
         }
     }
 }
@@ -82,5 +91,5 @@ private let itemFormatter: DateFormatter = {
 }()
 
 #Preview {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    ContentView()
 }
